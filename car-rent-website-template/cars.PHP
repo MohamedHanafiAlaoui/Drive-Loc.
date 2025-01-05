@@ -1,3 +1,35 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+require_once "../src/class/car.php";
+$person = new Car();
+
+session_start();
+
+
+
+if (isset($_SESSION['user_id']) )
+{
+
+}else {
+    header("Location: login.php");
+}
+
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+    $page = 1;
+}
+
+$totalRows = $person->Nbr_Car();
+$rowsPerPage = $person->getLinesParPage();
+
+$totalPages = ceil($totalRows / $rowsPerPage);
+
+$personList = $person->GetCar($page);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +59,9 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-
+        <style>
+            
+        </style>
     </head>
 
     <body>
@@ -68,7 +102,7 @@
         <div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a href="" class="navbar-brand p-0">
+                    <a href="index.php" class="navbar-brand p-0">
                         <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i></i>Cental</h1>
                         <!-- <img src="img/logo.png" alt="Logo"> -->
                     </a>
@@ -77,19 +111,20 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav mx-auto py-0">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="index.php" class="nav-item nav-link active">Home</a>
                             <a href="about.html" class="nav-item nav-link">About</a>
-                            <a href="service.html" class="nav-item nav-link">Service</a>
-                            <a href="blog.html" class="nav-item nav-link">Blog</a>
+                            <a href="cars.PHP" class="nav-item nav-link">Our Cars</a>
+                            <!-- <a href="blog.html" class="nav-item nav-link">Blog</a> -->
                             
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Pages</a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">user</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="feature.html" class="dropdown-item">Our Feature</a>
-                                    <a href="cars.html" class="dropdown-item active">Our Cars</a>
-                                    <a href="team.html" class="dropdown-item">Our Team</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                    <a href="404.html" class="dropdown-item">404 Page</a>
+                                <a href="#" class="dropdown-item"><?php echo $_SESSION['FullName']; ?></a>
+
+                                    <a href="./loguot.php" class="dropdown-item">loguot</a>
+                                    <!-- <a href="cars.html" class="dropdown-item">Our Cars</a> -->
+                                    <!-- <a href="team.html" class="dropdown-item">Our Team</a> -->
+                                   
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -123,10 +158,11 @@
                     </p>
                 </div>
                 <div class=" wow fadeInUp d-flex " style="gap: 10px; flex-wrap: wrap; justify-content: center;" data-wow-delay="0.1s">
+                <?php foreach ($personList as $person): ?>
                     <div class="categories-item p-4">
                         <div class="categories-item-inner">
                             <div class="categories-img rounded-top">
-                                <img src="img/car-1.png" class="img-fluid w-100 rounded-top" alt="">
+                                <img src="<?= $person['image']?>" class="img-fluid w-100 rounded-top" alt="">
                             </div>
                             <div class="categories-content rounded-bottom p-4">
                                 <h4>Mercedes Benz R3</h4>
@@ -163,145 +199,61 @@
                                         <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
+                                <a href="./detCar.PHP?id=<?= $person['id_car']?>" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
                             </div>
                         </div>
                     </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top">
-                                <img src="img/car-2.png" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Toyota Corolla Cross</h4>
-                                <div class="categories-review mb-4">
-                                    <div class="me-3">3.5 Review</div>
-                                    <div class="d-flex justify-content-center text-secondary">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star text-body"></i>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$128:00/Day</h4>
-                                </div>
-                                <div class="row gy-2 gx-0 text-center mb-4">
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top">
-                                <img src="img/car-3.png" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Tesla Model S Plaid</h4>
-                                <div class="categories-review mb-4">
-                                    <div class="me-3">3.8 Review</div>
-                                    <div class="d-flex justify-content-center text-secondary">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star text-body"></i>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$170:00/Day</h4>
-                                </div>
-                                <div class="row gy-2 gx-0 text-center mb-4">
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="categories-item p-4">
-                        <div class="categories-item-inner">
-                            <div class="categories-img rounded-top">
-                                <img src="img/car-4.png" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="categories-content rounded-bottom p-4">
-                                <h4>Hyundai Kona Electric</h4>
-                                <div class="categories-review mb-4">
-                                    <div class="me-3">4.8 Review</div>
-                                    <div class="d-flex justify-content-center text-secondary">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                                <div class="mb-4">
-                                    <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$187:00/Day</h4>
-                                </div>
-                                <div class="row gy-2 gx-0 text-center mb-4">
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
-                                    </div>
-                                    <div class="col-4 border-end border-white">
-                                        <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
-                                    </div>
-                                    <div class="col-4">
-                                        <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
+                <?php endforeach ?>
+
+                    
                 </div>
+                <nav aria-label="Page navigation example">
+            <ul class="pagination mt-5  justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item">
+                    <?php
+                    if ($page > 1) {
+                        $prevPage = $page - 1;
+                        echo "<a class='page-link' href='?page=$prevPage'><span aria-hidden='true'>&laquo;</span> Previous</a>";
+                    } else {
+                        echo "<span class='page-link disabled'><span aria-hidden='true'>&laquo;</span> Previous</span>";
+                    }
+                    ?>
+                </li>
+
+                <!-- Page Numbers -->
+                <?php
+                for ($i = 1; $i <= $totalPages; $i++) {
+                    if ($page === $i) {
+                        echo "<li class='page-item active'><span class='page-link'>$i</span></li>";
+                    } else {
+                        echo "<li class='page-item'><a class='page-link' href='?page=$i'>$i</a></li>";
+                    }
+                }
+                ?>
+
+                <!-- Next Button -->
+                <li class="page-item">
+                    <?php
+                    if ($page < $totalPages) {
+                        $nextPage = $page + 1;
+                        echo "<a class='page-link' href='?page=$nextPage'>Next <span aria-hidden='true'>&raquo;</span></a>";
+                    } else {
+                        echo "<span class='page-link disabled'>Next <span aria-hidden='true'>&raquo;</span></span>";
+                    }
+                    ?>
+                </li>
+            </ul>
+        </nav>
+                
             </div>
         </div>
+
+
+
+
+
+
         <!-- Car categories End -->
 
         <!-- Car Steps Start -->
@@ -312,6 +264,7 @@
                     <p class="mb-0 text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut amet nemo expedita asperiores commodi accusantium at cum harum, excepturi, quia tempora cupiditate! Adipisci facilis modi quisquam quia distinctio,
                     </p>
                 </div>
+                
                 <div class="row g-4">
                     <div class="col-lg-4  wow fadeInUp" data-wow-delay="0.1s">
                         <div class="steps-item p-4 mb-4">
@@ -334,7 +287,10 @@
                             <div class="setps-number">03.</div>
                         </div>
                     </div>
+                    
                 </div>
+                
+                
             </div>
         </div>
         <!-- Car Steps End -->
