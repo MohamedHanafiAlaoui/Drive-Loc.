@@ -28,15 +28,9 @@ Développer un module de gestion de location de voitures en utilisant **PHP orie
 
 ---
 
-## ⚙️ Installation
 
-### Prérequis
-- **Serveur Web** : Apache/Nginx avec PHP.
-- **Base de Données** : MySQL ou MariaDB.
-- **Extensions PHP** : PDO, cURL, etc.
-- **Optionnel** : DataTable pour une pagination dynamique.
 
 ### Étapes
 1. Clonez le dépôt :
    ```bash
-   git clone https://github.com/username/project-name.git
+   https://www.canva.com/design/DAGbXEC60H8/M-GuC87IZjKzAKu0i3qE6Q/edit?utm_content=DAGbXEC60H8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
