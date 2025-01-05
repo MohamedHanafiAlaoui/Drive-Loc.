@@ -22,8 +22,8 @@ if (isset($_GET['id'])) {
     } else {
         $error = "Inscription échouée. Veuillez réessayer.";
         echo $error;
-        exit;
-        header("Location: /pluto-1.0.0/addcar.php?msg=" . urlencode($error));
-        exit;
+        // exit;
+        // header("Location: /pluto-1.0.0/addcar.php?msg=" . urlencode($error));
+        // exit;
     }
 }

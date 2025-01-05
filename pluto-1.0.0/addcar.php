@@ -5,13 +5,13 @@ require ("../src/class/colorType.php");
 session_start();
 
 
-if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
-{
+// if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1))
+// {
 
 
-}else {
-    header("Location: /car-rent-website-template/login.php");
-}
+// }else {
+//     header("Location: /car-rent-website-template/login.php");
+// }
 
 
 
@@ -151,85 +151,96 @@ $TYPES=$TYPE->viewType();
                <!-- end topbar -->
                <!-- dashboard inner -->
                <div class="midde_cont">
-                  <div class="container-fluid">
-                    <form action="../src/objecte/regestretionCar.php" method="post">
-                        <!-- Model -->
-                        <div class="mb-3">
-                          <label for="modele" class="form-label">Model</label>
-                          <input type="text" class="form-control" id="modele" name="modele" required>
-                        </div>
-                        
-                        <!-- Color -->
-                        <div class="mb-3">
-                          <label for="id_color" class="form-label">Color</label>
-                          <select class="form-select" id="id_color" name="id_color" required>
-                            <option value="">Select Color</option>
-                            <?php foreach ($COLORS as $COLOR): ?>
-                            
-                            <option value=<?= htmlspecialchars ($COLOR['id_color'])?>><?= htmlspecialchars($COLOR['nameColor'])?></option>
-                            <?php endforeach; ?>
-                          </select>
-                        </div>
-                        
-                        <!-- Price -->
-                        <div class="mb-3">
-                          <label for="prix" class="form-label">Price</label>
-                          <input type="number" class="form-control" id="prix" name="prix" step="0.01" required>
-                        </div>
-                        
-                        <!-- Availability -->
-                        <div class="mb-3">
-                          <label class="form-label">Availability</label>
-                          <div>
-                            <label for="disponibilite_yes" class="me-3">
-                              <input type="radio" id="disponibilite_yes" name="disponibilite" value="yes" required> Available
-                            </label>
-                            <label for="disponibilite_no">
-                              <input type="radio" id="disponibilite_no" name="disponibilite" value="no" required> Not Available
-                            </label>
-                          </div>
-                        </div>
-                        
-                        <!-- Type -->
-                        <div class="mb-3">
-                          <label for="id_type" class="form-label">Type</label>
-                          <select class="form-select" id="id_type" name="id_type" required>
-                            <option value="">Select Type</option>
-                            <?php foreach ($TYPES as $TYPE): ?>
-                            
-                            <option value=<?= htmlspecialchars ($TYPE['id_type'])?>><?= htmlspecialchars($TYPE['nameType'])?></option>
-                            <?php endforeach; ?>
-                          </select>
-                        </div>
-                        
-                        <!-- Location -->
-                        <div class="mb-3">
-                          <label for="lieu" class="form-label">Location</label>
-                          <input type="text" class="form-control" id="lieu" name="lieu" required>
-                        </div>
-                        
-                        <!-- Mileage -->
-                        <div class="mb-3">
-                          <label for="kilometrage" class="form-label">Mileage</label>
-                          <input type="number" class="form-control" id="kilometrage" name="kilometrage" required>
-                        </div>
-                        
-                        <!-- Image -->
-                        <div class="mb-3">
-                          <label for="image" class="form-label">Image</label>
-                          <input type="text" class="form-control" name="image" id="image" required>
-                        </div>
-                        
-                        <!-- Description -->
-                        <div class="mb-3">
-                          <label for="description" class="form-label">Description</label>
-                          <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
-                        </div>
-                        
-                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                      </form>
-                      
-                  </div>
+               <div class="container-fluid">
+    <form action="../src/objecte/regestretionCar.php" method="post">
+        <div id="vehicles-container">
+            <!-- Groupe de champs pour un véhicule -->
+            <div class="vehicle-group">
+                <!-- Model -->
+                <div class="mb-3">
+                    <label for="modele" class="form-label">Model</label>
+                    <input type="text" class="form-control" name="vehicles[0][modele]" required>
+                </div>
+                
+                <!-- Color -->
+                <div class="mb-3">
+                    <label for="id_color" class="form-label">Color</label>
+                    <select class="form-select" name="vehicles[0][id_color]" required>
+                        <option value="">Select Color</option>
+                        <?php foreach ($COLORS as $COLOR): ?>
+                            <option value="<?= htmlspecialchars($COLOR['id_color']) ?>">
+                                <?= htmlspecialchars($COLOR['nameColor']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <!-- Price -->
+                <div class="mb-3">
+                    <label for="prix" class="form-label">Price</label>
+                    <input type="number" class="form-control" name="vehicles[0][prix]" step="0.01" required>
+                </div>
+                
+                <!-- Availability -->
+                <div class="mb-3">
+                    <label class="form-label">Availability</label>
+                    <div>
+                        <label for="disponibilite_yes_0" class="me-3">
+                            <input type="radio" id="disponibilite_yes_0" name="vehicles[0][disponibilite]" value="yes" required> Available
+                        </label>
+                        <label for="disponibilite_no_0">
+                            <input type="radio" id="disponibilite_no_0" name="vehicles[0][disponibilite]" value="no" required> Not Available
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Type -->
+                <div class="mb-3">
+                    <label for="id_type" class="form-label">Type</label>
+                    <select class="form-select" name="vehicles[0][id_type]" required>
+                        <option value="">Select Type</option>
+                        <?php foreach ($TYPES as $TYPE): ?>
+                            <option value="<?= htmlspecialchars($TYPE['id_type']) ?>">
+                                <?= htmlspecialchars($TYPE['nameType']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                
+                <!-- Location -->
+                <div class="mb-3">
+                    <label for="lieu" class="form-label">Location</label>
+                    <input type="text" class="form-control" name="vehicles[0][lieu]" required>
+                </div>
+                
+                <!-- Mileage -->
+                <div class="mb-3">
+                    <label for="kilometrage" class="form-label">Mileage</label>
+                    <input type="number" class="form-control" name="vehicles[0][kilometrage]" required>
+                </div>
+                
+                <!-- Image -->
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="text" class="form-control" name="vehicles[0][image]" required>
+                </div>
+                
+                <!-- Description -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" name="vehicles[0][description]" rows="4" required></textarea>
+                </div>
+                
+                <hr>
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <button type="button" id="add-vehicle" class="btn btn-secondary">Add Another Vehicle</button>
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
                   <!-- footer -->
                   <div class="container-fluid">
                      <div class="footer">
@@ -266,5 +277,29 @@ $TYPES=$TYPE->viewType();
       <!-- custom js -->
       <script src="js/custom.js"></script>
       <script src="js/chart_custom_style1.js"></script>
+
+<script>
+    document.getElementById('add-vehicle').addEventListener('click', function () {
+        const container = document.getElementById('vehicles-container');
+        const vehicleGroups = container.getElementsByClassName('vehicle-group');
+        const index = vehicleGroups.length;
+
+        const newGroup = vehicleGroups[0].cloneNode(true);
+
+       
+        const inputs = newGroup.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            const name = input.name.replace(/\[\d+\]/, `[${index}]`);
+            input.name = name;
+
+            if (input.id) {
+                input.id = input.id.replace(/_\d+$/, `_${index}`);
+            }
+            input.value = ''; 
+        });
+
+        container.appendChild(newGroup);
+    });
+</script>
    </body>
 </html>
