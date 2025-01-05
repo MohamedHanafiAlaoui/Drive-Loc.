@@ -1,5 +1,4 @@
 <?php
-
 class connection_db
 {
     private $host = 'localhost';
@@ -7,23 +6,23 @@ class connection_db
     private $userName = 'root';
     private $pw = '1234';
 
-    public $conx;
+    protected $conx;
 
-    public function __construct()
+    public function connect()
     {
         try {
             $this->conx = new PDO("mysql:host={$this->host};dbname={$this->dbName}", $this->userName, $this->pw);
-            $this->conx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conx->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->conx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+            return $this->conx;
         } catch (PDOException $e) {
-            die("CONNECTION FAILED :" . $e->getMessage());
+            error_log("Connection error: " . $e->getMessage());
+            return null;  
         }
     }
 }
 
 
 
-?>
 
 
 

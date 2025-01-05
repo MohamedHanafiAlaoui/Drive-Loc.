@@ -67,5 +67,13 @@ class User extends connection_db
             return false;
         }
     }
+    public function Nbr_user()
+    {
+        $query = $this->conx->prepare("SELECT count(*) AS total FROM user");
+        $query->execute();
+        $result = $query->fetch();
+        return $result['total'];
+
+    }
 
 }
